@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 8ac2d065158bdc44380d37f37fab0209
+timeCreated: 1521747597
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - partToRotate: {instanceID: 0}
+  - bulletPrefab: {instanceID: 0}
+  - firePoint: {instanceID: 0}
+  - Tower1Avatar: {instanceID: 0}
+  - circleRange: {fileID: 1768017469942910, guid: 64cef66538f3db54a88cf69b11755625,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
