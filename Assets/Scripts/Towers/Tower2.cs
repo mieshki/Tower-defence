@@ -15,14 +15,11 @@ public class Tower2 : MonoBehaviour
     public float range = GameStats.Tower2Range;
     public float fireRate = GameStats.Tower2FireRate;
 
-    //public float idleRotationSpeed = 80f;
-
     public string upgradeLevel = "";
     public string upgradeCost = "";
     public string upgradeDamage = "";
     public string upgradeFireRate = "";
     public string upgradeRange = "";
-
 
     public static int Tower2LevelStatic = GameStats.Tower2Level;
     public static float Tower2CostStatic = GameStats.Tower2Cost;
@@ -36,21 +33,18 @@ public class Tower2 : MonoBehaviour
     public static string upgradeFireRateStatic = "";
     public static string upgradeRangeStatic = "+1";
 
-
     [Header("Unity Setup Fields")]
     public string enemyTag = "Enemy";
 
     public Transform partToRotate;
     public float turnSpeed = 10f;
 
-
     private float fireCountdown = 0f;
-
 
     public GameObject bulletPrefab;
     public Transform firePoint;
 
-    [Header("Tower1 Stats Informations")]
+    [Header("Tower2 Stats Informations")]
     public Sprite Tower2Avatar;
     public static string Tower2Name = "Tower2";
     public static string Tower2LevelStat = "Level: " + Tower2LevelStatic;
@@ -67,14 +61,8 @@ public class Tower2 : MonoBehaviour
     public static string Tower2Stats5 = "Type: Ground & Air";
     public static string Tower2Stats5Upgrade = "";
 
-
-
-
-
-
     public Vector3 Tower2circleRangePos;
     public Vector3 Tower2circleRangeScale;
-
 
     void Awake()
     {
@@ -83,13 +71,10 @@ public class Tower2 : MonoBehaviour
         Tower2Damage = GameStats.Tower2Damage;
         range = GameStats.Tower2Range;
         fireRate = GameStats.Tower2FireRate;
-
         UpdateInfo();
         MenuButtons.chooseTower2();
     }
 
-
-    // Use this for initialization
     void Start()
     {
         InvokeRepeating("UpdateTarget", 0f, 0.1f);
@@ -105,11 +90,8 @@ public class Tower2 : MonoBehaviour
         if (!haveTarget)
         {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
-
-
             shortestDistance = Mathf.Infinity;
             nearestEnemy = null;
-
 
             foreach (GameObject enemy in enemies)
             {
@@ -119,13 +101,8 @@ public class Tower2 : MonoBehaviour
                     shortestDistance = distanceToEnemy;
                     nearestEnemy = enemy;
                 }
-                else
-                {
-
-                }
             }
         }
-
 
         if (nearestEnemy != null && shortestDistance <= range)
         {
@@ -136,49 +113,27 @@ public class Tower2 : MonoBehaviour
         {
             target = null;
             haveTarget = false;
-
         }
-
-
     }
 
     public float distanceToEnemyUpdated = Mathf.Infinity;
-
-
-    // Update is called once per frame
     void Update()
     {
-
         Tower2circleRangePos = new Vector3(transform.position.x, -0.5f, transform.position.z);
         Tower2circleRangeScale.x = range * 2;
         Tower2circleRangeScale.z = range * 2;
 
-
         if (fireCountdown >= 0f)
-        {
             fireCountdown -= Time.deltaTime;
-        }
-        else
-        {
-
-        }
-
-
 
         if (gameObject.tag == "turretAbleToShoot")
         {
-
             if (target == null)
-            {
-                //transform.eulerAngles += new Vector3(0, idleRotationSpeed * Time.deltaTime, 0);
                 return;
-            }
 
             // obliczanie odleglosci = cel - twojaPozycja
             Vector3 dir = target.position - transform.position;
-
             shortestDistance = Vector3.Distance(transform.position, target.transform.position);
-
             Quaternion lookRotation = Quaternion.LookRotation(dir);
             Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
             partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
@@ -188,33 +143,18 @@ public class Tower2 : MonoBehaviour
                 Shoot();
                 fireCountdown = 1f / fireRate;
             }
-
         }
-
-
-
-
-
-
     }
-
 
     void Shoot()
     {
         GameObject bulletGO = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-
         Bullet bullet = bulletGO.GetComponent<Bullet>();
         bullet.name = Tower2Damage.ToString();
 
         if (bullet != null)
-        {
             bullet.Seek(target);
-        }
-
-
     }
-
-
 
     private void OnDrawGizmosSelected()
     {
@@ -222,37 +162,21 @@ public class Tower2 : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, range);
     }
 
-
     public bool showRange = false;
 
-
-    void OnTriggerEnter(Collider other)
-    {
+    void OnTriggerEnter(Collider other){
         if (other.gameObject.tag == "checkingGO")
-        {
             UpdateUIStats();
-        }
-        else
-        {
-
-        }
-
     }
-
 
     public void UpdateUIStats()
     {
-
-
         UpdateInfo();
-
         MenuButtons.UpdateUIStatsInfo(Tower2Avatar, Tower2Name, Tower2LevelStat, Tower2LevelStatUpgrade, Tower2Optionally, Tower2Stats1, Tower2Stats1Upgrade, Tower2Stats2, Tower2Stats2Upgrade, Tower2Stats3, Tower2Stats3Upgrade, Tower2Stats4, Tower2Stats4Upgrade, Tower2Stats5, Tower2Stats5Upgrade);
         MenuButtons.UIStatsEnemyEnabled = false;
         MenuButtons.UIStatsEnabled = true;
         MenuButtons.UIUpgradeAndSellButtonToggle = true;
-
         MenuButtons.towerToDo = gameObject;
-
         PublicGameobjects.showRange = true;
         PublicGameobjects.circleRangePos = Tower2circleRangePos;
         PublicGameobjects.circleRangeScale = Tower2circleRangeScale;
@@ -265,7 +189,6 @@ public class Tower2 : MonoBehaviour
         Tower2DamageStatic = Tower2Damage;
         Tower2RangeStatic = range;
         Tower2FireRateStatic = fireRate;
-
         
         if (Tower2Level == 1)
         {
@@ -313,7 +236,6 @@ public class Tower2 : MonoBehaviour
             MenuButtons.UIUpgradeShowUpgradeButton = false;
         }
         
-
         upgradeLevelStatic = upgradeLevel;
         upgradeCostStatic = upgradeCost;
         upgradeDamageStatic = upgradeDamage;
@@ -338,8 +260,4 @@ public class Tower2 : MonoBehaviour
         Tower2circleRangeScale.x = range * 2;
         Tower2circleRangeScale.z = range * 2;
     }
-
-
-
-
 }

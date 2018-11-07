@@ -14,17 +14,11 @@ public class Tower1 : MonoBehaviour {
     public float range = GameStats.Tower1Range;
     public float fireRate = GameStats.Tower1FireRate;
 
-
-    //public float idleRotationSpeed = 80f;
-
     public string upgradeLevel = "+1";
     public string upgradeCost = "+14$";
     public string upgradeDamage = "+6";
     public string upgradeFireRate = "";
     public string upgradeRange = "+1.5";
-
-
-
 
     public static int Tower1LevelStatic = GameStats.Tower1Level;
     public static float Tower1CostStatic = GameStats.Tower1Cost;
@@ -38,17 +32,13 @@ public class Tower1 : MonoBehaviour {
     public static string upgradeFireRateStatic = "";
     public static string upgradeRangeStatic = "+1.5";
 
-
-
     [Header("Unity Setup Fields")]
     public string enemyTag = "Enemy";
 
     public Transform partToRotate;
     public float turnSpeed = 10f;
 
-
     private float fireCountdown = 0f;
-
 
     public GameObject bulletPrefab;
     public Transform firePoint;
@@ -70,17 +60,11 @@ public class Tower1 : MonoBehaviour {
     public static string Tower1Stats5 = "Type: Ground & Air";
     public static string Tower1Stats5Upgrade = "";
 
-
-
-
-
     public Vector3 Tower1circleRangePos;
     public Vector3 Tower1circleRangeScale;
 
-
     void Awake()
     {
-        
         Tower1Level = GameStats.Tower1Level;
         Tower1Cost = GameStats.Tower1Cost;
         Tower1Damage = GameStats.Tower1Damage;
@@ -90,16 +74,11 @@ public class Tower1 : MonoBehaviour {
         MenuButtons.chooseTower1();
     }
 
-
-    // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         InvokeRepeating("UpdateTarget", 0f, 0.1f);
         UpdateInfo();
-   }
-
-
-
-
+    }
 
     public GameObject nearestEnemy;
     public float shortestDistance;
@@ -107,18 +86,11 @@ public class Tower1 : MonoBehaviour {
 
     void UpdateTarget()
     {
-
-
-
-
         if (!haveTarget)
         {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
-
-
             shortestDistance = Mathf.Infinity;
             nearestEnemy = null;
-
 
             foreach (GameObject enemy in enemies)
             {
@@ -128,14 +100,9 @@ public class Tower1 : MonoBehaviour {
                     shortestDistance = distanceToEnemy;
                     nearestEnemy = enemy;
                 }
-                else
-                {
-                    
-                }
             }
         }
         
-
         if (nearestEnemy != null && shortestDistance <= range )
         {
             target = nearestEnemy.transform;
@@ -145,47 +112,26 @@ public class Tower1 : MonoBehaviour {
         {
             target = null;
             haveTarget = false;
-          
         }
-
-
     }
 
     public float distanceToEnemyUpdated = Mathf.Infinity;   
-    // Update is called once per frame
     void Update () {
-
         Tower1circleRangePos = new Vector3(transform.position.x, -0.5f, transform.position.z);
         Tower1circleRangeScale.x = range * 2;
         Tower1circleRangeScale.z = range * 2;
 
-
         if (fireCountdown >= 0f)
-        {
             fireCountdown -= Time.deltaTime;
-        }
-        else
-        {
-
-        }
-
-
 
         if (gameObject.tag == "turretAbleToShoot")
         {
-            
-
 		    if (target == null)
-            {
-                //transform.eulerAngles += new Vector3(0, idleRotationSpeed * Time.deltaTime, 0);
                 return;
-            }
 
             // obliczanie odleglosci = cel - twojaPozycja
             Vector3 dir = target.position - transform.position;
-
             shortestDistance = Vector3.Distance(transform.position, target.transform.position);
-
             Quaternion lookRotation = Quaternion.LookRotation(dir);
             Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
             partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
@@ -195,34 +141,18 @@ public class Tower1 : MonoBehaviour {
                 Shoot();
                 fireCountdown = 1f / fireRate;
             }
-
         }
-
-
-
-        
-
-
     }
-
-
 
     void Shoot ()
     {
         GameObject bulletGO = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-
         Bullet bullet = bulletGO.GetComponent<Bullet>();
         bullet.name = Tower1Damage.ToString();
 
         if (bullet != null)
-        {
             bullet.Seek(target);
-        }
-        
-        
     }
-
-    
 
     private void OnDrawGizmosSelected()
     {
@@ -230,45 +160,26 @@ public class Tower1 : MonoBehaviour {
         Gizmos.DrawWireSphere(transform.position, range);
     }
 
-
-
     public bool showRange = false;
-
 
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "checkingGO")
-        {
-            UpdateUIStats();
-        }
-        else
-        {
-
-        }
-        
+            UpdateUIStats(); 
     }
 
     public void UpdateUIStats()
     {
-
-
         UpdateInfo();
-
         MenuButtons.UpdateUIStatsInfo(Tower1Avatar, Tower1Name, Tower1LevelStat, Tower1LevelStatUpgrade, Tower1Optionally, Tower1Stats1, Tower1Stats1Upgrade, Tower1Stats2, Tower1Stats2Upgrade, Tower1Stats3, Tower1Stats3Upgrade, Tower1Stats4, Tower1Stats4Upgrade, Tower1Stats5, Tower1Stats5Upgrade);
         MenuButtons.UIStatsEnemyEnabled = false;
         MenuButtons.UIStatsEnabled = true;
         MenuButtons.UIUpgradeAndSellButtonToggle = true;
-
         MenuButtons.towerToDo = gameObject;
-
         PublicGameobjects.showRange = true;
         PublicGameobjects.circleRangePos = Tower1circleRangePos;
         PublicGameobjects.circleRangeScale = Tower1circleRangeScale;
     }
-
-
-    
-
 
     public void UpdateInfo()
     {
@@ -277,10 +188,6 @@ public class Tower1 : MonoBehaviour {
         Tower1DamageStatic = Tower1Damage;
         Tower1RangeStatic = range;
         Tower1FireRateStatic = fireRate;
-
-        
-
-
 
         if(Tower1Level == 1)
         {
@@ -328,16 +235,11 @@ public class Tower1 : MonoBehaviour {
             MenuButtons.UIUpgradeShowUpgradeButton = false;
         }
 
-
         upgradeLevelStatic = upgradeLevel;
         upgradeCostStatic = upgradeCost;
         upgradeDamageStatic = upgradeDamage;
         upgradeFireRateStatic = upgradeFireRate;
         upgradeRangeStatic = upgradeRange;
-
-
-
-
 
         Tower1Name = "Tower1";
         Tower1LevelStat = "Level: " + Tower1LevelStatic;
@@ -357,6 +259,4 @@ public class Tower1 : MonoBehaviour {
         Tower1circleRangeScale.x = range * 2;
         Tower1circleRangeScale.z = range * 2;
     }
-
-
 }

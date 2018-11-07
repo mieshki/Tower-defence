@@ -17,13 +17,10 @@ public class ClickPositionManager : MonoBehaviour {
 
     public LayerMask emptySlotMask;
 
-    //public LayerMask clickMask;
     Vector3 clickPosition;
     private string colliderName;
 
-
     private GameObject turretRespawn;
-
 
     void Start()
     {
@@ -40,17 +37,10 @@ public class ClickPositionManager : MonoBehaviour {
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 100f, emptySlotMask))
             {
-                //clickPosition = hit.point;
-                //colliderName = hit.collider.tag;
-                //clickPosition = hit.collider.gameObject.transform.position;
-
-
                 if (hit.collider.tag == "EmptySlot" && !EventSystem.current.IsPointerOverGameObject())
                 {
-
-                    //Pobieranie środka pola do postawienia
                     clickPosition = hit.collider.GetComponent<Renderer>().bounds.center;
-                    clickPosition.y += 0.12f;
+                    clickPosition.y = -0.45f;
 
                         if (Nodes.turret1 && GameStats.money >= GameStats.Tower1Cost)
                         {
@@ -60,9 +50,6 @@ public class ClickPositionManager : MonoBehaviour {
                             hit.collider.tag = "BusySlot";
                             unlockTurret();
                             GameStats.money -= GameStats.Tower1Cost;
-
-                        //zmiana tagu miejsca turreta na zajęty
-
                         }
                         else if (Nodes.turret2 && GameStats.money >= GameStats.Tower2Cost)
                         {
@@ -92,53 +79,32 @@ public class ClickPositionManager : MonoBehaviour {
                             GameStats.money -= GameStats.Tower4Cost;
                         }
                         else
-                        {
                                 turretRespawn = null;
-                        }
-
-                    
-
                 }
 
 
                 else if (hit.collider.tag == "BusySlot" && !EventSystem.current.IsPointerOverGameObject())
                 {
-                    //Debug.Log("slot zajety");
+                    //
                 }
                 else
                 {
-                    //Debug.Log("klikniecie w droge, reset");
                     Nodes.turret1 = false;
                     Nodes.turret2 = false;
                     Nodes.turret3 = false;
                     Nodes.turret4 = false;
                 }
-                
-
-
-                //clickPosition = hit.collider.GetComponent<Renderer>().bounds.center;
-
-                //Instantiate(cube, clickPosition, transform.rotation);
             }
-        }
-
-        
+        }  
     }
-
-
+    
     void unlockTurret()
     {
-        // zmienianie tagu turreta, aby skrypt namierzania i strzelania (w turret.cs) zaczął działać
         turretRespawn.tag = "turretAbleToShoot";       
-
-        //usuwanie placeholdera który sie pojawił po najechaniu na pole
         Nodes.alreadyRespawned = true;
         MenuButtons.UIStatsTowerEnabled = false;
         MenuButtons.UIStatsEnabled = false;
         PublicGameobjects.showRangeNewTurret = false;
     }
-   
-
-
 }
 

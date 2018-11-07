@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Nodes : MonoBehaviour {
 
-
     public Color hoverColorEmpty;
     public Color hoverColorBusy;
 
@@ -17,8 +16,6 @@ public class Nodes : MonoBehaviour {
     public static bool turret3 = false;
     public static bool turret4 = false;
 
-
-
     public static GameObject tower1Slot;
     public static GameObject tower2Slot;
     public static GameObject tower3Slot;
@@ -29,34 +26,13 @@ public class Nodes : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "TowerSellCheckSlot")
-        {
-            Debug.Log("czyszcze");
             gameObject.tag = "EmptySlot";
-        }
-        else
-        {
-            //Debug.Log("lel");
-        }
-
-
     }
 
-
-    // Use this for initialization
     void Start () {
         rend = GetComponent<Renderer>();
-
-        //startColor = rend.material.color;
-
         PublicGameobjects.towerLastMaterial = GetComponent<Renderer>().material;
     }
-
-    void Update()
-    {
-        
-    }
-
-    
 
     private void OnMouseEnter()
     {
@@ -83,11 +59,8 @@ public class Nodes : MonoBehaviour {
 
             if (gameObject.tag == "EmptySlot")
             {
-                //rend.material.color = hoverColorEmpty;
-
                 TowerRespawnVector = GetComponent<Renderer>().bounds.center;
-                TowerRespawnVector.y += 0.12f;
-
+                TowerRespawnVector.y = -0.45f;
 
                 if (turret1)
                 {
@@ -103,18 +76,10 @@ public class Nodes : MonoBehaviour {
                         PublicGameobjects.circleRangePos = TowerCircleRangePos;
                         PublicGameobjects.circleRangeScale = TowerCircleRangeScale;
 
-
-
                         if (GameStats.money >= GameStats.Tower1Cost)
-                        {
-                            //rend.material.color = hoverColorEmpty;
                             rend.material = PublicGameobjects.towerEmptyMaterialStatic;
-                        }
                         else
-                        {
-                            //rend.material.color = hoverColorBusy;
-                            rend.material = PublicGameobjects.towerBusyMaterialStatic;
-                        }                       
+                            rend.material = PublicGameobjects.towerBusyMaterialStatic;                  
                     }
                 }
                 else if (turret2)
@@ -131,18 +96,10 @@ public class Nodes : MonoBehaviour {
                         PublicGameobjects.circleRangePos = TowerCircleRangePos;
                         PublicGameobjects.circleRangeScale = TowerCircleRangeScale;
 
-
                         if (GameStats.money >= GameStats.Tower2Cost)
-                        {
-                            //rend.material.color = hoverColorEmpty;
                             rend.material = PublicGameobjects.towerEmptyMaterialStatic;
-
-                        }
                         else
-                        {
-                            //rend.material.color = hoverColorBusy;
                             rend.material = PublicGameobjects.towerBusyMaterialStatic;
-                        }
                     }
                 }
                 else if (turret3)
@@ -158,18 +115,10 @@ public class Nodes : MonoBehaviour {
                         PublicGameobjects.circleRangePos = TowerCircleRangePos;
                         PublicGameobjects.circleRangeScale = TowerCircleRangeScale;
 
-
-
                         if (GameStats.money >= GameStats.Tower3Cost)
-                        {
-                            //rend.material.color = hoverColorEmpty;
                             rend.material = PublicGameobjects.towerEmptyMaterialStatic;
-                        }
                         else
-                        {
-                            //rend.material.color = hoverColorBusy;
                             rend.material = PublicGameobjects.towerBusyMaterialStatic;
-                        }
                     }
                 }
                 else if (turret4)
@@ -185,73 +134,37 @@ public class Nodes : MonoBehaviour {
                         PublicGameobjects.circleRangePos = TowerCircleRangePos;
                         PublicGameobjects.circleRangeScale = TowerCircleRangeScale;
 
-
                         if (GameStats.money >= GameStats.Tower4Cost)
-                        {
-                            //rend.material.color = hoverColorEmpty;
                             rend.material = PublicGameobjects.towerEmptyMaterialStatic;
-                        }
                         else
-                        {
-                            //rend.material.color = hoverColorBusy;
                             rend.material = PublicGameobjects.towerBusyMaterialStatic;
-                        }
                     }
                 }
-                else
-                {
-                    //PublicGameobjects.showRangeNewTurret = false;
-                }
-
             }
             else if (gameObject.tag == "BusySlot")
-            {
-                //rend.material.color = hoverColorBusy;
                 rend.material = PublicGameobjects.towerBusyMaterialStatic;
-            }
-
         }
         else
-        {
-            //rend.material.color = startColor;
             rend.material = PublicGameobjects.towerLastMaterial;
-        }
-        
-
     }
-
-    
-
 
     private void OnMouseExit()
     {
-        //rend.material.color = startColor;
         rend.material = PublicGameobjects.towerLastMaterial;
 
         PublicGameobjects.showRangeNewTurret = false;
 
 
-
         if (tower1Slot != null)
-        {
             Destroy(tower1Slot);
-        }
         if (tower2Slot != null)
-        {
             Destroy(tower2Slot);
-        }
         if (tower3Slot != null)
-        {
             Destroy(tower3Slot);
-        }
         if (tower4Slot != null)
-        {
             Destroy(tower4Slot);
-        }
-
 
         alreadyRespawned = false;
-
     }
 
     void CheckIfTurretChanged()
@@ -261,10 +174,7 @@ public class Nodes : MonoBehaviour {
             if (tower1Slot != null)
             {
                 Destroy(tower1Slot);
-
-                //rend.material.color = startColor;
                 rend.material = PublicGameobjects.towerLastMaterial;
-
                 PublicGameobjects.showRangeNewTurret = false;
             }
         }
@@ -274,7 +184,6 @@ public class Nodes : MonoBehaviour {
             if (tower2Slot != null)
             {
                 Destroy(tower2Slot);
-                //rend.material.color = startColor;
                 rend.material = PublicGameobjects.towerLastMaterial;
                 PublicGameobjects.showRangeNewTurret = false;
             }
@@ -285,7 +194,6 @@ public class Nodes : MonoBehaviour {
             if (tower3Slot != null)
             {
                 Destroy(tower3Slot);
-                //rend.material.color = startColor;
                 rend.material = PublicGameobjects.towerLastMaterial;
                 PublicGameobjects.showRangeNewTurret = false;
             }
@@ -296,16 +204,9 @@ public class Nodes : MonoBehaviour {
             if (tower4Slot != null)
             {
                 Destroy(tower4Slot);
-                //rend.material.color = startColor;
                 rend.material = PublicGameobjects.towerLastMaterial;
                 PublicGameobjects.showRangeNewTurret = false;
             }
         }
-
     }
-
-    
-
-
-
 }

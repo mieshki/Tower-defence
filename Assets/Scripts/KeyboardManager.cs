@@ -5,11 +5,6 @@ using UnityEngine.EventSystems;
 
 public class KeyboardManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-
-	}
-
     void CheckForHideStats()
     {
         if (Input.GetMouseButtonDown(0))
@@ -18,7 +13,6 @@ public class KeyboardManager : MonoBehaviour {
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 100f))
             {
-
                 if (hit.collider.tag != "BusySlot" && !EventSystem.current.IsPointerOverGameObject())
                 {
                     MenuButtons.UIStatsEnabled = false;
@@ -26,9 +20,7 @@ public class KeyboardManager : MonoBehaviour {
                     MenuButtons.UIStatsTowerEnabled = false;
                     MenuButtons.UIUpgradeAndSellButtonToggle = false;
                     MenuButtons.towerToDo = null;
-
                     PublicGameobjects.showRange = false;
-
                 }
             }
         }
@@ -39,23 +31,17 @@ public class KeyboardManager : MonoBehaviour {
             MenuButtons.UIStatsTowerEnabled = false;
             MenuButtons.UIUpgradeAndSellButtonToggle = false;
             MenuButtons.towerToDo = null;
-
             PublicGameobjects.showRange = false;
         }
     }
 	
-	// Update is called once per frame
 	void Update () {
-
-
         if (Input.GetMouseButtonDown(1))
         {
             Nodes.turret1 = false;
             Nodes.turret2 = false;
             Nodes.turret3 = false;
             Nodes.turret4 = false;
-
-
         }
 
         if (Input.GetKeyDown("1"))
@@ -83,17 +69,11 @@ public class KeyboardManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!MenuButtons.UIStatsEnabled && !MenuButtons.UIStatsEnemyEnabled)
-            {
-                
+            { 
                 if (Time.timeScale == 1)
-                {
                     Time.timeScale = 0;
-                }
                 else
-                {
                     Time.timeScale = 1;
-                }
-                
             }
 
 
@@ -104,7 +84,6 @@ public class KeyboardManager : MonoBehaviour {
                 MenuButtons.UIStatsTowerEnabled = false;
                 MenuButtons.UIUpgradeAndSellButtonToggle = false;
                 MenuButtons.towerToDo = null;
-
                 Nodes.turret1 = false;
                 Nodes.turret2 = false;
                 Nodes.turret3 = false;
@@ -112,18 +91,11 @@ public class KeyboardManager : MonoBehaviour {
 
             }
             if (PublicGameobjects.showRange)
-            {
-                PublicGameobjects.showRange = false;
-            }
-            
-
-            
+                PublicGameobjects.showRange = false;  
         }
 
         CheckForHideStats();
     }
-
-
 
     public static void SetOthersToFalse()
     {
@@ -131,8 +103,5 @@ public class KeyboardManager : MonoBehaviour {
         Nodes.turret2 = false;
         Nodes.turret3 = false;
         Nodes.turret4 = false;
-    }
-
-
-   
+    } 
 }
