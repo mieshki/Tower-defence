@@ -36,7 +36,7 @@ public class DamageDetection : MonoBehaviour {
         life = Mathf.Round(GameStats.allEnemyLastLife * GameStats.allEnemyLifeMultiplier);
         maxLife = life;
         GameStats.actualLife = life;
-	}
+    }
 
     public float dmg;
 

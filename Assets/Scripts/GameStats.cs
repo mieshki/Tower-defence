@@ -68,6 +68,7 @@ public class GameStats : MonoBehaviour {
     public static float Tower4FireRate = 0.33f;
     public static float allEnemyStartLife = 10f;
     public static float allEnemyLifeMultiplier = 1;
+
     public static float actualLife = 10f;
     public static float allEnemyLastLife = 10f;
 

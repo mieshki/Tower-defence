@@ -69,9 +69,10 @@ public class WaveSpawning : MonoBehaviour {
             yield return new WaitForSeconds(spawnDelay);
         }
 
-        if(monstersType == 10)
+        if (monstersType == 10)
             GameStats.allEnemyLastLife = GameStats.actualLife / 10;
         else
+            GameStats.allEnemyLastLife = GameStats.actualLife;
 
         breakBetweenFirstWave = breakBetweenWaves;
         ableToNextWave = true;
